@@ -2,6 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using ProEventos.Persistence.Contexts;
 
 namespace ProEventos.Persistence.Migrations
 {
@@ -31,9 +33,6 @@ namespace ProEventos.Persistence.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Local")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Lote")
                         .HasColumnType("longtext");
 
                     b.Property<int>("QtdPessoas")
@@ -169,7 +168,7 @@ namespace ProEventos.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("ProEventos.Domain.Palestrante", "Palestrante")
-                        .WithMany("PalestranteEvento")
+                        .WithMany("PalestrantesEventos")
                         .HasForeignKey("PalestranteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -205,7 +204,7 @@ namespace ProEventos.Persistence.Migrations
 
             modelBuilder.Entity("ProEventos.Domain.Palestrante", b =>
                 {
-                    b.Navigation("PalestranteEvento");
+                    b.Navigation("PalestrantesEventos");
 
                     b.Navigation("RedesSociais");
                 });
