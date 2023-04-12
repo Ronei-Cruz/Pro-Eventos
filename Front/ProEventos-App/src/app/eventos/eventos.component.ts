@@ -3,6 +3,7 @@ import { EventoService } from '../services/evento.service';
 import { Evento } from '../models/Evento';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-eventos',
@@ -23,10 +24,19 @@ export class EventosComponent implements OnInit {
     private eventoService: EventoService,
     private modalService: BsModalService,
     private toastr: ToastrService,
+    private spinner: NgxSpinnerService,
   ) { }
 
   public ngOnInit() {
     this.getEventos();
+
+    /** spinner starts on init */
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 5000);
   }
 
   public alterarImg() : void {

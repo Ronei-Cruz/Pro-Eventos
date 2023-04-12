@@ -1,5 +1,5 @@
 // Angular
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
@@ -11,6 +11,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 // Componets
 import { AppRoutingModule } from './app-routing.module';
@@ -39,6 +40,7 @@ import { DateTimeFormatPipe } from './helpers/dateTimeFormat.pipe';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    NgxSpinnerModule,
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
     BsDropdownModule.forRoot(),
@@ -51,6 +53,7 @@ import { DateTimeFormatPipe } from './helpers/dateTimeFormat.pipe';
       progressAnimation: 'decreasing'
     }),
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     EventoService // -> umas das maneiras de injeção de dependência
   ],
