@@ -33,3 +33,7 @@ button[title]:hover::before {
 .marg-icon{
   margin-right: 2px;
 }
+
+.table-hover tbody tr:hover td {
+  background-color: #78c2fa;
+}
