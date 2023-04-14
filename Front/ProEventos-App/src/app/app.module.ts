@@ -23,12 +23,14 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
 import { NavComponent } from './shared/nav/nav.component';
+import { EventoDetalheComponent } from './components/evento-detalhe/evento-detalhe.component';
 
 // Services
 import { EventoService } from './services/evento.service';
 
 // Pipes
 import { DateTimeFormatPipe } from './helpers/dateTimeFormat.pipe';
+import { EventoListaComponent } from './components/evento-lista/evento-lista.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { DateTimeFormatPipe } from './helpers/dateTimeFormat.pipe';
     TituloComponent,
     NavComponent,
     DateTimeFormatPipe,
+    EventoDetalheComponent,
+    EventoListaComponent,
    ],
   imports: [
     BrowserModule,

@@ -7,6 +7,6 @@
     </div>
   </div>
   <div class="p-2" *ngIf="botaoListar">
-    <button class="btn btn-outline-light">Listar {{titulo}}</button>
+    <button class="btn btn-outline-light" [routerLink]="['lista']" routerLinkActive="router-link-active">Listar {{titulo}}</button>
   </div>
 </div>
