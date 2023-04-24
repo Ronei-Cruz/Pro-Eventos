@@ -32,4 +32,8 @@ export class EventoDetalheComponent {
       imageURL: ['', Validators.required],
     });
   }
+
+  public resetForm(): void {
+    this.form.reset();
+  }
 }
