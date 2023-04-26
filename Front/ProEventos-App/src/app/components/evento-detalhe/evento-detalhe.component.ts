@@ -37,4 +37,12 @@ export class EventoDetalheComponent {
     event.preventDefault();
     this.form.reset();
   }
+
+  public cssValidator(campoForm :FormControl) : any {
+    return {
+      'is-invalid': campoForm?.errors && campoForm?.touched,
+      'is-valid': campoForm?.valid && campoForm?.touched
+    }
+  }
+
 }
