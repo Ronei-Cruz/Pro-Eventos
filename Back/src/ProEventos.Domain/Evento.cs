@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProEventos.Domain
 {
+    // [Table("Eventos-db")] -> Quando quiser dar um Nome a sua tabela no Banco de Dados
     public class Evento
     {
         public int Id { get; set; }
