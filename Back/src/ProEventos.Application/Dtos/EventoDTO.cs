@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,6 +11,7 @@ namespace ProEventos.Application.Dtos
         [Display(Name ="local")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string Local { get; set; }
+
         public string DataEvento { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
@@ -34,8 +36,11 @@ namespace ProEventos.Application.Dtos
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [EmailAddress(ErrorMessage ="Precisa ser um {0} válido.")]
         public string Email { get; set; }
+
         public IEnumerable<LoteDTO> Lotes { get; set; }
+
         public IEnumerable<RedeSocialDTO> RedesSociais { get; set; }
+
         public IEnumerable<PalestranteDTO> Palestrante { get; set; }
     }
 }

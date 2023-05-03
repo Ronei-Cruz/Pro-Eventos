@@ -41,14 +41,14 @@
         <td>{{item.id}}</td>
         <td>{{item.tema}}</td>
         <td>{{item.local}}</td>
-        <td>{{item.dataEvento | dateTimeFormatPipe}}</td>
+        <td>{{item.dataEvento}}</td>
         <td class="d-none d-md-table-cell">{{item.qtdPessoas}}</td>
         <td class="d-none d-md-table-cell"><span *ngFor="let lote of item.lotes">{{ lote.nome }} <br></span></td>
         <td>
           <!-- <button type="button" class="btn btn-primary btn-sm me-2" title="Editar" style="position: relative;">
             <i class="fa-solid fa-marker"></i>
           </button> -->
-          <button type="button" class="btn btn-danger btn-lg" (click)="openModal(template)"title="Excluir"
+          <button type="button" class="btn btn-danger btn-lg" (click)="openModal($event, template, item.id)"title="Excluir"
           style="position: relative;">
             <i class="fa-solid fa-trash"></i>
           </button>
@@ -68,7 +68,7 @@
 
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Tem certeza que quer excluir esse evento?</p>
+    <p>Tem certeza que quer excluir o Evento de Código: {{this.eventoID}}?</p>
     <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
     <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
   </div>

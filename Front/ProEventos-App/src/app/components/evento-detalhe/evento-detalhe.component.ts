@@ -1,6 +1,16 @@
+// Angular
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
+// Import
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
+
+// Application
+import { Evento } from '@app/models/Evento';
+import { EventoService } from '@app/services/evento.service';
 
 @Component({
   selector: 'app-evento-detalhe',
@@ -9,6 +19,8 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 })
 export class EventoDetalheComponent {
   form: FormGroup;
+  evento = {} as Evento;
+  estadoSalvar = 'post';
 
   get f(): any {
     return this.form.controls;
@@ -23,13 +35,41 @@ export class EventoDetalheComponent {
     }
   }
 
-  constructor(private fb: FormBuilder, private localeService: BsLocaleService) {
+  constructor(private fb: FormBuilder, private localeService: BsLocaleService,
+              private router: ActivatedRoute, private eventoService: EventoService,
+              private spinner: NgxSpinnerService, private toaster: ToastrService)
+  {
     this.form = new FormGroup({});
     this.localeService.use('pt-br');
   }
 
+  public carregarEvento(): void {
+    const eventoIdParam = this.router.snapshot.paramMap.get('id');
+
+
+    if (eventoIdParam != null) {
+      this.spinner.show();
+
+      this.estadoSalvar = 'put';
+
+      this.eventoService.getEventoById(+eventoIdParam).subscribe(
+        (evento: Evento) => {
+          this.evento = { ...evento };
+          this.form.patchValue(this.evento);
+        },
+        (error: any) => {
+          this.spinner.hide();
+          this.toaster.error('Erro ao tentar carregar evento', 'Erro!')
+          console.error(error);
+        },
+        () => this.spinner.hide(),
+      );
+    }
+  }
+
   public ngOnInit(): void {
     this.validation();
+    this.carregarEvento();
   }
 
   public validation(): void {
@@ -54,6 +94,40 @@ export class EventoDetalheComponent {
       'is-invalid': campoForm?.errors && campoForm?.touched,
       'is-valid': campoForm?.valid && campoForm?.touched
     }
+  }
+
+  public salvarAlteracao(): void {
+    this.spinner.show();
+
+    if (this.form.valid) {
+
+      if (this.estadoSalvar === 'post') {
+        this.evento = { ...this.form.value };
+        this.eventoService.postEvento(this.evento).subscribe(
+          () => this.toaster.success('Evento salvo com Sucesso!', 'Salvo'),
+          (error: any) => {
+            console.log(error);
+            this.spinner.hide();
+            this.toaster.error('Erro ao tentar salvar evento', 'Erro');
+          },
+          () => this.spinner.hide(),
+        );
+      }
+      else {
+        this.evento = { id: this.evento.id, ...this.form.value };
+        this.eventoService.putEvento(this.evento.id, this.evento).subscribe(
+          () => this.toaster.success('Evento salvo com Sucesso!', 'Salvo'),
+          (error: any) => {
+            console.log(error);
+            this.spinner.hide();
+            this.toaster.error('Erro ao tentar salvar evento', 'Erro');
+          },
+          () => this.spinner.hide(),
+        );
+      }
+
+    }
+
   }
 
 }
