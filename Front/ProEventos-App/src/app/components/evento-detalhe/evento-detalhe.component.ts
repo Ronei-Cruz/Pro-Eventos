@@ -98,33 +98,30 @@ export class EventoDetalheComponent {
 
   public salvarAlteracao(): void {
     this.spinner.show();
-
     if (this.form.valid) {
 
-      if (this.estadoSalvar === 'post') {
-        this.evento = { ...this.form.value };
-        this.eventoService.postEvento(this.evento).subscribe(
-          () => this.toaster.success('Evento salvo com Sucesso!', 'Salvo'),
-          (error: any) => {
-            console.log(error);
-            this.spinner.hide();
-            this.toaster.error('Erro ao tentar salvar evento', 'Erro');
-          },
-          () => this.spinner.hide(),
-        );
-      }
-      else {
-        this.evento = { id: this.evento.id, ...this.form.value };
-        this.eventoService.putEvento(this.evento.id, this.evento).subscribe(
-          () => this.toaster.success('Evento salvo com Sucesso!', 'Salvo'),
-          (error: any) => {
-            console.log(error);
-            this.spinner.hide();
-            this.toaster.error('Erro ao tentar salvar evento', 'Erro');
-          },
-          () => this.spinner.hide(),
-        );
-      }
+      this.evento = (this.estadoSalvar === 'post') ? { ...this.form.value } : { id: this.evento.id, ...this.form.value };
+      this.eventoService.save(this.evento).subscribe(
+        () => this.toaster.success('Evento salvo com Sucesso!', 'Salvo'),
+        (error: any) => {
+          console.log(error);
+          this.spinner.hide();
+          this.toaster.error('Erro ao tentar salvar evento', 'Erro');
+        },
+        () => this.spinner.hide(),
+      );
+      
+      /*
+      ----> PARTE QUE DÁ ERRO <----
+      this.eventoService[this.estadoSalvar](this.evento).subscribe(
+        () => this.toaster.success('Evento salvo com Sucesso!', 'Salvo'),
+        (error: any) => {
+          console.log(error);
+          this.spinner.hide();
+          this.toaster.error('Erro ao tentar salvar evento', 'Erro');
+        },
+        () => this.spinner.hide(),
+      ); */
 
     }
 

@@ -28,7 +28,7 @@
       "@environments/*": ["src/environments/*"]
     }
   },
-  
+
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
