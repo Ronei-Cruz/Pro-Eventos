@@ -84,16 +84,13 @@ export class EventoListaComponent {
       (result: any) => {
         console.log(result);
         this.toastr.success('O Evento foi deletado com sucesso', 'Deletado!');
-        this.spinner.hide();
         this.carregarEventos();
       },
       (error: any) => {
         console.error(error);
         this.toastr.error(`Erro ao tentar deletar evento ${this.eventoID}`, 'Erro');
-        this.spinner.hide();
       },
-      () => this.spinner.hide(),
-    );
+    ).add(() => this.spinner.hide());
 
     this.toastr.success('Excluindo...', 'Seu evento será excluido!!');
   }
