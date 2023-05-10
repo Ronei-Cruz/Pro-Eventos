@@ -39,10 +39,25 @@ namespace ProEventos.Application
                     {
                         var lote = lotes.FirstOrDefault(lote => lote.Id == model.Id);
                         model.EventoId = eventoId;
-                        _mapper.Map(models, lote);
-                        _geralPersist.Update<Lote>(lote);
+                        // _mapper.Map(models, lote);
+                        if (lote != null)
+                        {
+                            lote.Nome = model.Nome;
+                            lote.Preco = model.Preco;
+                            lote.DataInicio = Convert.ToDateTime(model.DataInicio);
+                            lote.DataFim = Convert.ToDateTime(model.DataFim);
+                            lote.Quantidade = model.Quantidade;
+                            lote.EventoId = eventoId;
 
-                        await _geralPersist.SaveChangesAsync();
+                            _geralPersist.Update<Lote>(lote);
+                            await _geralPersist.SaveChangesAsync();
+                        }
+
+                        // RETIRADA DO MAPPER POR QUESTÕES DE ERROR  'Missing type map configuration or unsupported mapping.'
+
+                        /* _mapper.Map(models, lote, typeof(LoteDTO), typeof(Lote));
+                         _geralPersist.Update<Lote>(lote);
+                        await _geralPersist.SaveChangesAsync(); */
                     }
                 }
 
