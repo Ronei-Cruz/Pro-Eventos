@@ -34,6 +34,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
 
 // Services
 import { EventoService } from './services/evento.service';
+import { LoteService } from './services/lote.service';
 
 // Pipes
 import { DateTimeFormatPipe } from './helpers/dateTimeFormat.pipe';
@@ -80,7 +81,8 @@ defineLocale('pt-br', ptBrLocale);
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
-    EventoService // -> umas das maneiras de injeção de dependência
+    EventoService, // -> umas das maneiras de injeção de dependência
+    LoteService
   ],
   bootstrap: [AppComponent]
 })
