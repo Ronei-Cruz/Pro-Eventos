@@ -27,7 +27,7 @@ export class EventoDetalheComponent {
   eventoId?: number;
   modalRef?: BsModalRef;
   loteAtual = { id: 0, nome: '', indice: 0 };
-
+  tituloLote: string[] = [];
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -50,6 +50,15 @@ export class EventoDetalheComponent {
     }
   }
 
+  get bsConfigLote(): any {
+    return {
+      adaptivePosition: true,
+      dateInputFormat: 'DD/MM/YYYY',
+      containerClass: 'theme-default',
+      showWeekNumbers: false
+    }
+  }
+
   constructor(private fb: FormBuilder, private localeService: BsLocaleService,
               private activatedRouter: ActivatedRoute, private eventoService: EventoService,
               private spinner: NgxSpinnerService, private toaster: ToastrService,
@@ -65,7 +74,7 @@ export class EventoDetalheComponent {
     this.eventoId = +this.activatedRouter.snapshot.paramMap.get('id')!;
 
 
-    if (this.eventoId != null || this.eventoId === 0) {
+    if (this.eventoId != null && this.eventoId != 0) {
       this.spinner.show();
 
       this.estadoSalvar = 'put';
@@ -90,6 +99,14 @@ export class EventoDetalheComponent {
   public ngOnInit(): void {
     this.validation();
     this.carregarEvento();
+
+
+    this.lotes.controls.forEach((lote: AbstractControl, i: number) => {
+      lote.get('nome')?.valueChanges.subscribe((valor: string) => {
+        this.tituloLote[i] = this.retornaTitulo(valor);
+      });
+    });
+
   }
 
   public validation(): void {
@@ -132,6 +149,10 @@ export class EventoDetalheComponent {
     }
   }
 
+  public retornaTitulo(nome: string): string{
+    return nome === null || nome === '' ? 'Nome do lote' : nome;
+  }
+
   public salvarEvento(): void {
     this.spinner.show();
     if (this.form.valid) {
@@ -153,9 +174,10 @@ export class EventoDetalheComponent {
   }
 
   public salvarLote(): void {
-    this.spinner.show();
+
     if (this.eventoId !== undefined) {
       if (this.form.controls['lotes'].valid) {
+        this.spinner.show();
         this.loteService.saveLote(this.eventoId, this.form.value.lotes).subscribe(
           () => {
             this.toaster.success('Lotes salvos com sucesso.', 'Salvo!');

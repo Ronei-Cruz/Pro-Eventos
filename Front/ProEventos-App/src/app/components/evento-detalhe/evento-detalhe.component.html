@@ -79,9 +79,10 @@
     <p>Clique em Lote para adicionar e preencher novos Lotes</p>
     <div class="form-row p-1">
       <div class="col" [formGroup]="form">
-        <div formArrayName="lotes" *ngFor="let lotes of lotes.controls; let i=index" class="my-3">
+        <div formArrayName="lotes" *ngFor="let lote of lotes.controls; let i=index" class="my-3">
           <fieldset [formGroupName]="i" class="form-group" >
             <legend class="d-flex justify-content-between capitalize">
+              {{ retornaTitulo(lote.get('nome')?.value) }}
               <button class="p-2 btn btn-sm btn-outline-warning mb-1 d-flex" (click)="removerLote(template, i)">
                 <i class="fa fa-window-close m-1"></i>
                 <b class="ml-1 d-none d-sm-block">Excluir</b>
@@ -105,11 +106,13 @@
               </div>
               <div class="form-group col-md-4">
                 <label>Data Início</label>
-                <input type="text" class="form-control" formControlName="dataInicio" placeholder="01/01/2001">
+                <input type="text" class="form-control" formControlName="dataInicio" placeholder="01/01/2001"
+                       bsDatepicker [bsConfig]="bsConfigLote">
               </div>
               <div class="form-group col-md-4">
                 <label>Data Fim</label>
-                <input type="text" class="form-control" formControlName="dataFim" placeholder="01/01/2001">
+                <input type="text" class="form-control" formControlName="dataFim" placeholder="01/01/2001"
+                       bsDatepicker [bsConfig]="bsConfigLote">
               </div>
             </div>
           </fieldset>
@@ -128,7 +131,7 @@
       <button class="d-flex btn btn-secondary me-auto border">
         Cancelar Alteração
       </button>
-      <button class="btn btn-success" (click)="salvarLote()">Salvar Lotes</button>
+      <button [disabled]="!form.controls['lotes'].valid" class="btn btn-success" (click)="salvarLote()">Salvar Lotes</button>
     </div>
   </div>
 </div>
@@ -141,3 +144,6 @@
     <button type="button" class="btn btn-primary" (click)="declineDeleteLote()" >Não</button>
   </div>
 </ng-template>
+
+<!-- lotes.get(i+'.nome')?.value == null || lotes.get(i+'.nome')?.value == ''
+                ? 'Nome do lote' : lotes.get(i+'.nome')?.value -->
