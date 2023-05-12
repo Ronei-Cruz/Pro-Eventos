@@ -15,6 +15,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
+import { NgxCurrencyModule } from 'ngx-currency';
+import {NgxMaskModule} from 'ngx-mask-2'
 
 // Componets
 import { AppRoutingModule } from './app-routing.module';
@@ -78,6 +80,8 @@ defineLocale('pt-br', ptBrLocale);
       progressBar: true,
       progressAnimation: 'decreasing'
     }),
+    NgxCurrencyModule,
+    NgxMaskModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

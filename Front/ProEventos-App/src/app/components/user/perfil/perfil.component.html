@@ -82,6 +82,7 @@
           <div class="form-group col-sm-4">
             <label>Telefone</label>
             <input type="text" class="form-control" formControlName="telefone"
+                  mask="(00) 00000-0000"
                   [ngClass]="cssValidator(f.telefone)">
             <div *ngIf="f.telefone.errors?.required" class="invalid-feedback">Telefone é obrigatório</div>
           </div>
