@@ -30,6 +30,7 @@ namespace ProEventos.API
             services.AddDbContext<ProEventosContext>(
                 context => context.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
             );
+            
             services.AddControllers()
                     .AddNewtonsoftJson(
                         x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
